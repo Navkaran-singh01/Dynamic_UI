@@ -4,6 +4,7 @@ import armsImage from "./assets/arms.png";
 import useStore from "./store";
 import "./sidebar.css"; // ✅ import the new CSS file
 
+
 const Sidebar = () => {
   const {
     viewMode,
@@ -55,7 +56,6 @@ const Sidebar = () => {
   const handleMaterialToggle = (material) =>
     setOpenMaterial(openMaterial === material ? null : material);
 
-  // ✅ dynamic inline props only where necessary (variables from Zustand)
   const sidebarDynamicStyle =
     viewMode === "desktop"
       ? {
@@ -68,6 +68,13 @@ const Sidebar = () => {
           padding: `${containerPadding}px`,
           fontFamily: propertyFontStyle,
         };
+
+  // ✅ Reusable style object for consistent title styling
+  const accordionTitleStyle = {
+    fontFamily: itemNameFontStyle,
+    fontSize: `${itemNameFontSize}px`,
+    fontWeight: itemNameFontWeight,
+  };
 
   return (
     <div className={`sidebar ${viewMode}`} style={sidebarDynamicStyle}>
@@ -110,11 +117,7 @@ const Sidebar = () => {
               <img src={armsImage} alt="Arm" className="accordion-img" />
               <span
                 className="accordion-title"
-                style={{
-                  fontFamily: itemNameFontStyle,
-                  fontSize: `${itemNameFontSize}px`,
-                  fontWeight: itemNameFontWeight,
-                }}
+                style={accordionTitleStyle} // ✅ Apply consistent style
               >
                 1. Arms
               </span>
@@ -164,7 +167,8 @@ const Sidebar = () => {
                 style={{ backgroundColor: selectedColor.hex }}
               ></div>
               <div className="accordion-text">
-                <span className="accordion-title">2. Arms Finish</span>
+                {/* ✅ FIXED: Added style prop */}
+                <span className="accordion-title" style={accordionTitleStyle}>2. Arms Finish</span>
                 <p className="accordion-subtitle">{selectedColor.name}</p>
               </div>
             </div>
@@ -228,7 +232,8 @@ const Sidebar = () => {
                 style={{ backgroundColor: selectedLegColor.hex }}
               ></div>
               <div className="accordion-text">
-                <span className="accordion-title">3. Legs Finish</span>
+                {/* ✅ FIXED: Added style prop */}
+                <span className="accordion-title" style={accordionTitleStyle}>3. Legs Finish</span>
                 <p className="accordion-subtitle">{selectedLegColor.name}</p>
               </div>
             </div>
